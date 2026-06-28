@@ -5,7 +5,6 @@ abstract class Conta {
     private String nome;
     private String email;
     private String senha;
-    private boolean logado = false;
 
     Conta(int id, String nome, String email, String senha) {
         this.id = id;
@@ -45,10 +44,6 @@ abstract class Conta {
     }
     public String getSenha() {
         return senha;
-    }
-
-    public boolean isLogado() {
-        return logado;
     }
 
     public int getId() {
