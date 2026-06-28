@@ -1,3 +1,7 @@
+package org.example;
+
+import java.time.Year;
+
 class Livro {
 
     private int idLivro;
@@ -5,76 +9,93 @@ class Livro {
     private String autor;
     private int anoLancamento;
     private String genero;
-    private boolean disponivel;
-    private int idDono;
+    private boolean disponivel = true;
+    private int idDono = 0;
 
-    Livro(String nome, String autor, int anoLancamento, String genero, boolean disponivel, int idDono) {
-
-    setNome(nome);
-    setAutor(autor);
-    setAnoLancamento(anoLancamento);
-    setGenero(genero);
-    setDisponivel(disponivel);
-    setIdDono(idDono);
-
+    Livro(int id,String nome, String autor, int anoLancamento, String genero) {
+        this.idLivro = id;
+        setNome(nome);
+        setAutor(autor);
+        setAnoLancamento(anoLancamento);
+        setGenero(genero);
     }
 
+    public int getIdLivro() {
+        return idLivro;
+    }
 
-
-    private void setNome(String nome) {
+    private boolean setNome(String nome) {
         if(nome != null && !nome.trim().isEmpty()) {
             this.nome = nome;
+            return true;
         }
+        return false;
     }
     public String getNome() {
         return nome;
     }
 
-    private void setAutor(String autor) {
-        if(autor != null && !nome.trim().isEmpty()) {
+    private boolean setAutor(String autor) {
+        if(autor != null && !autor.trim().isEmpty()) {
             this.autor = autor;
+            return true;
         }
+        return false;
     }
 
     public String getAutor() {
         return autor;
     }
 
-    private void setAnoLancamento(int anoLancamento) {
-       if(anoLancamento <= 2026) {
-           this.anoLancamento = anoLancamento ;
-       }
+    private boolean setAnoLancamento(int anoLancamento) {
+        int anoAtual = Year.now().getValue();
+
+        if (anoLancamento <= anoAtual) {
+            this.anoLancamento = anoLancamento;
+            return true;
+        }
+        return false;
     }
 
-    public int getAnoLancamento() {
-        return anoLancamento;
+    public String getAnoLancamentoFormatado() {
+        if (this.anoLancamento < 0) {
+            return Math.abs(this.anoLancamento) + " A.C.";
+        }
+        return this.anoLancamento + " D.C.";
     }
 
-    private void setGenero(String genero) {
+    private boolean setGenero(String genero) {
         if(genero != null && !genero.trim().isEmpty()) {
             this.genero = genero;
+            return true;
         }
+        return false;
     }
 
     public String getGenero() {
         return genero;
     }
 
-    private void setDisponivel(Boolean disponivel) {
-        this.disponivel = disponivel;
-    }
-
     public Boolean isDisponivel() {
         return disponivel;
     }
 
-    private void setIdDono(int idDono) {
-        this.idDono = idDono;
-
+    public int getIdDono() {
+        return idDono;
     }
 
-    public int getIdDono() {
-      return idDono;
+    public void setIdDono(int idDono) {
+        this.idDono = idDono;
+    }
+
+    public void alugar(int idUsuario) {
+        this.idDono = idUsuario;
+        this.disponivel = false;
+    }
+
+    public void devolver() {
+        this.idDono = 0;
+        this.disponivel = true;
     }
 
 }
