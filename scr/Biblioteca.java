@@ -6,12 +6,21 @@ public class Biblioteca {
 
     private ArrayList<Livro> livros = new ArrayList<>();
 
-    private ArrayList<Conta> clientes = new ArrayList<>();
+    private ArrayList<Cliente> clientes = new ArrayList<>();
 
     public Livro buscarLivro(int idLivro) {
         for (Livro livro : livros) {
             if(livro.getIdLivro() == idLivro) {
                 return livro;
+            }
+        }
+        return null;
+    }
+
+    public Cliente buscarClientePorEmail(String email) {
+        for (Cliente cliente : clientes) {
+            if(cliente.getEmail().equals(email)) {
+                return cliente;
             }
         }
         return null;
@@ -32,7 +41,7 @@ public class Biblioteca {
     }
 
     public void cadastrarCliente(String nome, String email, String senha) {
-        Conta cliente = new Cliente(gerarProximoIdCliente(), nome, email, senha);
+        Cliente cliente = new Cliente(gerarProximoIdCliente(), nome, email, senha);
         clientes.add(cliente);
     }
 
