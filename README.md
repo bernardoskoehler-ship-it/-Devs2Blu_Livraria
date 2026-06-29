@@ -1,1 +1,1 @@
-# -Devs2Blu_Livraria
+# Devs2Blu_Livraria
