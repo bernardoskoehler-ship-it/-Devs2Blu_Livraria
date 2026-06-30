@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Biblioteca {
 
+    Conta administrador = new Administrador("ADM", "adm@gmail.com", "12345678");
+
     private ArrayList<Livro> livros = new ArrayList<>();
 
     private ArrayList<Cliente> clientes = new ArrayList<>();
@@ -20,6 +22,22 @@ public class Biblioteca {
     public Cliente buscarClientePorEmail(String email) {
         for (Cliente cliente : clientes) {
             if(cliente.getEmail().equals(email)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
+    public boolean buscarADM(String email) {
+        if(email.equals("adm@gmail.com")) return true;
+        return false;
+    }
+    public Conta buscarContaPorEmail(String email) {
+        if (administrador != null && administrador.getEmail().equals(email)) {
+            return administrador;
+        }
+        for (Cliente cliente : clientes) {
+            if (cliente.getEmail().equalsIgnoreCase(email)) {
                 return cliente;
             }
         }
