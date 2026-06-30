@@ -1,8 +1,8 @@
 package org.example;
 
 public class Administrador extends Conta{
-    Administrador(int id, String nome, String email, String senha) {
-        super(id, nome, email, senha);
+    Administrador(String nome, String email, String senha) {
+        super(-1, nome, email, senha);
     }
 
     public boolean valorValido(int valor) {
