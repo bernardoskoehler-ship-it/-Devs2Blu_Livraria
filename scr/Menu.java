@@ -27,7 +27,7 @@ public class Menu {
         return scanner.nextLine(); // Apenas lê a String digitada
     }
 
-    public Conta menuLogin(Biblioteca biblioteca){
+    private Conta menuLogin(Biblioteca biblioteca){
         while(true) {
             System.out.println("--- Login ---");
             System.out.println("1: Entrar (Login)");
@@ -108,14 +108,139 @@ public class Menu {
                 return biblioteca.buscarClientePorEmail(email);
             }
         }
-    }
-
-    public void menuCliente() {
 
     }
 
-    public void menuAdministrador() {
+    private void menuCliente(Biblioteca biblioteca, Cliente cliente) {
+        while(true) {
+            System.out.println("1: Ver livros.");
+            System.out.println("2: Alugar Livro.");
+            System.out.println("3: Devolver Livro.");
+            System.out.println("4: Mostrar Histórico.");
+            System.out.println("5: Sair.");
+            int escolha = lerEscolha();
+            System.out.println("---");
+            if(escolha == 5) {
+                menuLogin(biblioteca);
+            }
+            if(escolha < 1 || escolha > 5) {
+                System.out.println("Opção inválida! Tente novamente.");
+                continue;
+            }
+            if(escolha == 1) {
+                biblioteca.mostrarLivros();
+                while(true) {
+                    System.out.println("---");
+                    System.out.println("Digite '1' para voltar:");
+                    int escolha2 = lerEscolha();
+                    if (escolha == 1) {
+                        break;
+                    }
+                    continue;
+                }
+            }
+            if(escolha == 2) {
+                while(true) {
+                    System.out.println("Digite o ID do livro que você deseja alugar:");
+                    int idLivro = lerEscolha();
+                    if(cliente.alugarLivro(idLivro, biblioteca)) {
+                        System.out.println(biblioteca.buscarLivro(idLivro) + " adicionado ao histórico.");
+                        System.out.println("---");
+                        break;
+                    }
+                    continue;
+                }
+                continue;
+            }
+            if(escolha == 3) {
+                while(true) {
+                    System.out.println("Digite o livro que você deseja devolver:");
+                    int idLivro = lerEscolha();
+                    if(cliente.devolverLivro(idLivro, biblioteca)) {
+                        System.out.println(biblioteca.buscarLivro(idLivro) + " devolvido.");
+                        System.out.println("---");
+                        break;
+                    }
+                    continue;
+                }
+                continue;
+            }
+            if(escolha == 4) {
+                cliente.mostrarHistorico();
+                while(true) {
+                    System.out.println("---");
+                    System.out.println("Digite '1' para voltar:");
+                    int escolha2 = lerEscolha();
+                    if (escolha == 1) {
+                        break;
+                    }
+                    continue;
+                }
+            }
+        }
+    }
 
+    private void menuAdministrador(Biblioteca biblioteca, Administrador administrador) {
+        while(true) {
+            System.out.println("1: Ver livros.");
+            System.out.println("2: Adicionar Livro.");
+            System.out.println("3: Remover Livro.");
+            System.out.println("4: Sair.");
+            int escolha = lerEscolha();
+            System.out.println("---");
+            if (escolha == 4) {
+                menuLogin(biblioteca);
+            }
+            if(escolha == 1) {
+                biblioteca.mostrarLivros();
+                while(true) {
+                    System.out.println("---");
+                    System.out.println("Digite '1' para voltar:");
+                    int escolha2 = lerEscolha();
+                    if (escolha == 1) {
+                        break;
+                    }
+                    continue;
+                }
+            }
+            if(escolha == 2) {
+                while(true) {
+                    System.out.println("--- Adicionando um novo livro a biblioteca ---");
+                    System.out.println("Escreva o nome do livro:");
+                    String nome = lerString();
+                    System.out.println("Escreva o nome do autor:");
+                    String nomeAutor = lerString();
+                    System.out.println("Digite o ano de lançamento do livro:");
+                    int ano = lerEscolha();
+                    System.out.println("Escreva o gênero do livro:");
+                    String genero = lerString();
+
+                    if(administrador.adicionarLivro(biblioteca, nome, nomeAutor, ano, genero)) {
+                        System.out.println("Livro adicionado a biblioteca!");
+                        System.out.println("---");
+                        break;
+                    }
+                    continue;
+                }
+            }
+            if(escolha == 3) {
+                while(true) {
+                    System.out.println("é importante lembrar que não é possivel remover um livro que esteja alugado no momento!");
+                    System.out.println("Digite o ID do livro que você deseja remover, ou digite '0' para sair:");
+                    int idLivro = lerEscolha();
+                    if(administrador.removerLivro(biblioteca, idLivro)) {
+                        System.out.println("Livro removido da biblioteca!");
+                        System.out.println("---");
+                        break;
+                    }
+                    if(idLivro == 0) {
+                        System.out.println("---");
+                        break;
+                    }
+                    continue;
+                }
+            }
+        }
     }
 
     public void menuBiblioteca(Biblioteca biblioteca) {
@@ -124,21 +249,19 @@ public class Menu {
             System.out.println("Encerrando o programa...");
             return;
         }
-        
+
         if (conta instanceof Cliente) {
             // Faz o "Casting" (avisa o Java para tratar a 'conta' especificamente como Cliente)
             Cliente clienteLogado = (Cliente) conta;
 
             System.out.println("\n--- ÁREA DO CLIENTE ---");
-            // Aqui você chama o menu específico do cliente, ex:
-            // menuCliente(clienteLogado, biblioteca);
+            menuCliente(biblioteca, clienteLogado);
         }
         else if (conta instanceof Administrador) {
             Administrador adminLogado = (Administrador) conta;
 
             System.out.println("\n--- ÁREA DO ADMINISTRADOR ---");
-            // Aqui você chama o menu específico do administrador, ex:
-            // menuAdmin(adminLogado, biblioteca);
+            menuAdministrador(biblioteca, adminLogado);
         }
     }
 }
