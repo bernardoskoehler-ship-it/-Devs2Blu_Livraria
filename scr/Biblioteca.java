@@ -52,4 +52,10 @@ public class Biblioteca {
     public boolean removerLivro(Livro livro) {
         return livros.remove(livro);
     }
+
+    public void mostrarLivros() {
+        for(Livro livro : livros) {
+            System.out.println("id" + livro.getIdLivro() + " | nome: " + livro.getNome() + " | Autor: " + livro.getAutor() + " | Ano de Lançamento: " + livro.getAnoLancamentoFormatado() + " | Disponivel: " + livro.isDisponivel());
+        }
+    }
 }
