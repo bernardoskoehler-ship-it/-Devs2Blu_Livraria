@@ -73,7 +73,23 @@ public class Biblioteca {
 
     public void mostrarLivros() {
         for(Livro livro : livros) {
-            System.out.println("id" + livro.getIdLivro() + " | nome: " + livro.getNome() + " | Autor: " + livro.getAutor() + " | Ano de Lançamento: " + livro.getAnoLancamentoFormatado() + " | Disponivel: " + livro.isDisponivel());
+            System.out.println("id: " + livro.getIdLivro() + " | nome: " + livro.getNome() + " | Autor: " + livro.getAutor() + " | Ano de Lançamento: " + livro.getAnoLancamentoFormatado() + " | Disponivel: " + livro.isDisponivel());
+        }
+    }
+    public void mostrarLivrosAlugadosPorId(int id) {
+        for(Livro livro : livros) {
+            if (livro.getIdDono() == id) {
+                System.out.println("id: " + livro.getIdLivro() + " | nome: " + livro.getNome() + " | Autor: " + livro.getAutor() + " | Ano de Lançamento: " + livro.getAnoLancamentoFormatado());
+            }
+        }
+    }
+    public void mostrarClientes() {
+        for(Cliente cliente : clientes) {
+            System.out.println("id: " + cliente.getId() + " | nome: " + cliente.getNome() + " | email: " + cliente.getEmail());
+            System.out.println("livros alugados:");
+            mostrarLivrosAlugadosPorId(cliente.getId());
+            cliente.mostrarHistorico();
+            System.out.println("------");
         }
     }
 }
