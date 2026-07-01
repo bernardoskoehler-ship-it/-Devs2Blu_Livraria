@@ -119,7 +119,7 @@ public class Menu {
             System.out.println("---");
 
             if(escolha == 5) {
-                return; // CORRIGIDO: Retorna para fechar este menu e voltar ao fluxo principal
+                return;
             }
             if(escolha < 1 || escolha > 5) {
                 System.out.println("Opção inválida! Tente novamente.");
@@ -131,7 +131,7 @@ public class Menu {
                     System.out.println("---");
                     System.out.println("Digite '1' para voltar:");
                     int escolha2 = lerEscolha();
-                    if (escolha2 == 1) { // CORRIGIDO: Validando a variável certa
+                    if (escolha2 == 1) {
                         break;
                     }
                 }
@@ -164,7 +164,7 @@ public class Menu {
                     System.out.println("---");
                     System.out.println("Digite '1' para voltar:");
                     int escolha2 = lerEscolha();
-                    if (escolha2 == 1) { // CORRIGIDO: Validando a variável certa
+                    if (escolha2 == 1) {
                         break;
                     }
                 }
@@ -178,12 +178,13 @@ public class Menu {
             System.out.println("1: Ver livros.");
             System.out.println("2: Adicionar Livro.");
             System.out.println("3: Remover Livro.");
-            System.out.println("4: Sair.");
+            System.out.println("4: Ver Clientes.");
+            System.out.println("5: Sair.");
             int escolha = lerEscolha();
             System.out.println("---");
 
-            if (escolha == 4) {
-                return; // CORRIGIDO: Retorna para evitar loop recursivo
+            if (escolha == 5) {
+                return;
             }
             if(escolha == 1) {
                 biblioteca.mostrarLivros();
@@ -191,7 +192,7 @@ public class Menu {
                     System.out.println("---");
                     System.out.println("Digite '1' para voltar:");
                     int escolha2 = lerEscolha();
-                    if (escolha2 == 1) { // CORRIGIDO: Validando a variável certa
+                    if (escolha2 == 1) {
                         break;
                     }
                 }
@@ -231,12 +232,22 @@ public class Menu {
                     }
                 }
             }
+            if(escolha == 4) {
+                while(true) {
+                    biblioteca.mostrarClientes();
+                    System.out.println("digite '0' para sair:");
+                    int sair = lerEscolha();
+                    if(sair == 0) {
+                        System.out.println("---");
+                        break;
+                    }
+                    continue;
+                }
+            }
         }
     }
 
     public void menuBiblioteca(Biblioteca biblioteca) {
-        // Colocamos o fluxo principal dentro de um loop para que, quando um usuário deslogar (return),
-        // ele volte automaticamente para a tela de login até que decida encerrar o programa (opção 3 do login).
         while (true) {
             Conta conta = menuLogin(biblioteca);
             if (conta == null) {
